@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: "2019-06-05T22:33:29Z"
+  labels:
+    name: development
+  name: development
+  resourceVersion: "433558"
+  selfLink: /api/v1/namespaces/development
+  uid: f11f309d-87e1-11e9-8034-025000000001
+spec:
+  finalizers:
+  - kubernetes
+status:
+  phase: Active
