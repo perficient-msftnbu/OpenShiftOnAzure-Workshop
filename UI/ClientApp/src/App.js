@@ -12,3 +12,5 @@ export default () => (
     <Route path='/fetch-data/:startDateIndex?' component={FetchData} />
   </Layout>
 );
+
+<p>API_URL: {window._env_.API_URL}</p>

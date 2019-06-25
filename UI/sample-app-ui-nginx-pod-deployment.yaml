@@ -17,6 +17,8 @@ spec:
       containers:
       - name: sample-app-ui-deployment
         image: palfery.azurecr.io/demos/simpledemo/ui:version-1
+        environment:
+        - "API_URL=https://localhost:5001"
         ports:
         - containerPort: 80
       imagePullSecrets:
