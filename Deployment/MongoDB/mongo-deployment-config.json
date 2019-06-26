@@ -1,0 +1,137 @@
+{
+	"apiVersion": "apps.openshift.io/v1",
+	"kind": "DeploymentConfig",
+	"metadata": {
+		"labels": {
+			"app": "mongo"
+		},
+		"name": "mongo",
+		"namespace": "workshop-demo"
+	},
+	"spec": {
+		"replicas": 1,
+		"selector": {
+			"app": "mongo",
+			"deploymentconfig": "mongo"
+		},
+		"strategy": {
+			"type": "Rolling"
+		},
+		"template": {
+			"metadata": {
+				"labels": {
+					"app": "mongo",
+					"deploymentconfig": "mongo"
+				}
+			},
+			"spec": {
+				"containers": [
+					{
+            "env": [
+              {
+                "name": "MONGO_INITDB_ROOT_USERNAME",
+                "value": "mongoadmin"
+              },
+              {
+                "name": "MONGO_INITDB_ROOT_PASSWORD",
+                "valueFrom": {
+                  "secretKeyRef": {
+                    "key": "MONGO_INITDB_ROOT_PASSWORD",
+                    "name": "mongo-root-password-secret"
+                  }
+                }
+              },
+              {
+                "name": "MONGO_INITDB_DATABASE",
+                "value": "weather"
+              },
+              {
+                "name": "MONGO_NON_ROOT_USERNAME",
+                "value": "mongouser"
+              },
+              {
+                "name": "MONGO_NON_ROOT_PASSWORD",
+                "valueFrom": {
+                  "secretKeyRef": {
+                    "key": "MONGO_NON_ROOT_PASSWORD",
+                    "name": "mongo-non-root-password-secret"
+                  }
+                }
+              }
+            ],
+						"image": "mongo:latest",
+						"imagePullPolicy": "Always",
+						"name": "mongo",
+						"ports": [
+							{
+								"containerPort": 27017,
+								"protocol": "TCP"
+							}
+						],
+						"resources": {},
+						"terminationMessagePath": "/dev/termination-log",
+						"terminationMessagePolicy": "File",
+						"volumeMounts": [
+							{
+								"mountPath": "/data/configdb",
+								"name": "mongo-volume-1"
+							},
+              {
+                "mountPath": "/data/db",
+                "name": "mongo-volume-2"
+              },
+              {
+                "mountPath": "/scripts",
+                "name": "mongo-volume-3"
+              }
+						]
+					}
+				],
+				"dnsPolicy": "ClusterFirst",
+				"restartPolicy": "Always",
+				"schedulerName": "default-scheduler",
+				"securityContext": {},
+				"terminationGracePeriodSeconds": 30,
+				"volumes": [
+					{
+						"name": "mongo-volume-1",
+						"persistentVolumeClaim": {
+							"claimName": "mongo-storage-claim-config"
+						}
+					},
+          {
+            "name": "mongo-volume-2",
+            "persistentVolumeClaim": {
+              "claimName": "mongo-storage-claim-data"
+            }
+          },
+          {
+            "name": "mongo-volume-3",
+            "persistentVolumeClaim": {
+              "claimName": "mongo-storage-claim-scripts"
+            }
+          }
+				]
+			}
+		},
+		"triggers": [
+			{
+				"type": "ConfigChange"
+			},
+			{
+				"imageChangeParams": {
+					"automatic": true,
+					"containerNames": [
+						"mongo"
+					],
+					"from": {
+						"kind": "ImageStreamTag",
+						"name": "mongo:latest",
+						"namespace": "workshop-demo"
+					}
+				},
+				"type": "ImageChange"
+			}
+		]
+	}
+}

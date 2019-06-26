@@ -1,0 +1,17 @@
+﻿Secrets
+oc create secret generic mongo-root-password-secret --from-literal=MONGO_INITDB_ROOT_PASSWORD=<Your Password>
+oc create secret generic mongo-non-root-password-secret --from-literal=MONGO_NON_ROOT_PASSWORD=<Your Password>
+
+Persistent Volume Claims
+oc apply -f .\mongo-persistent-volume-claim-config.yaml
+oc apply -f .\mongo-persistent-volume-claim-data.yaml
+oc apply -f .\mongo-persistent-volume-claim-scripts.yaml
+
+Image
+oc import-image mongo:latest --confirm
+
+Config Map
+oc apply -f .\mongo-init-db.json
+
+Configuration
+oc apply -f .\mongo-deployment-config.json
