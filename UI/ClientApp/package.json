@@ -36,7 +36,7 @@
     "extends": "react-app"
   },
   "scripts": {
-    "dev": "./env.sh && ./env.sh && cp env-config.js ./public/ && react-scripts start",
+    "deploy": "./env.sh && ./env.sh && cp env-config.js ./public/ && react-scripts build && copyfiles public/ public/",
     "start": "rimraf ./build && react-scripts start",
     "build": "react-scripts build && copyfiles public/ public/",
     "test": "cross-env CI=true react-scripts test --env=jsdom",
