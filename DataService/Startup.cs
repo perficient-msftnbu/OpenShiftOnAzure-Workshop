@@ -1,3 +1,5 @@
+using CardApp.Providers;
+using CardApp.Providers.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -21,7 +23,7 @@ namespace Card_App
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
+            services.AddSingleton<IWeatherForecastProvider, MockWeatherForecastProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

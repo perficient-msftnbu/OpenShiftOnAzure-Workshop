@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
       <IsPackable>false</IsPackable>
 
-    <RootNamespace>Card_App</RootNamespace>
+    <RootNamespace>CardApp</RootNamespace>
 
     <UserSecretsId>08e11989-e58e-4f15-b41b-7e03fd3d585f</UserSecretsId>
 
@@ -14,24 +14,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="MongoDB\mongo-deployment-config.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="MongoDB\mongo-persistent-volume-claim-config.yaml" />
-    <None Remove="MongoDB\mongo-persistent-volume-claim-data.yaml" />
-    <None Remove="MongoDB\mongo-service.yaml" />
-    <None Remove="MongoDB\oc-commands.txt" />
+    <Compile Remove="MongoDB\**" />
+    <Content Remove="MongoDB\**" />
+    <EmbeddedResource Remove="MongoDB\**" />
+    <None Remove="MongoDB\**" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.7.9" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="MongoDB\" />
   </ItemGroup>
 
 
