@@ -1,26 +1,19 @@
 {
-  "name": "Card_App",
+  "name": "my_new_app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.0.1",
-    "@material-ui/icons": "^4.0.1",
     "bootstrap": "^4.3.1",
-    "jquery": "3.3.1",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-redux": "^5.0.6",
+    "jquery": "^3.4.1",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
     "react-router-bootstrap": "^0.24.4",
     "react-router-dom": "^4.2.2",
-    "react-router-redux": "^5.0.0-alpha.8",
     "react-scripts": "^1.1.5",
     "reactstrap": "^6.3.0",
-    "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0",
     "rimraf": "^2.6.2"
   },
   "devDependencies": {
-    "@material-ui/core": "^4.0.1",
     "ajv": "^6.0.0",
     "babel-eslint": "^7.2.3",
     "cross-env": "^5.2.0",
@@ -29,15 +22,15 @@
     "eslint-plugin-flowtype": "^2.50.3",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
-    "eslint-plugin-react": "^7.11.1",
-    "copyfiles": "~2.1.0"
+    "eslint-plugin-react": "^7.11.1"
   },
   "eslintConfig": {
     "extends": "react-app"
   },
   "scripts": {
     "start": "rimraf ./build && react-scripts start",
-    "build": "react-scripts build && copyfiles public/ public/",
+    "build-test": "chmod -R 775 /opt/app-root/src/ClientApp && react-scripts build",
+    "build": "react-scripts build",
     "test": "cross-env CI=true react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "eslint ./src/"
