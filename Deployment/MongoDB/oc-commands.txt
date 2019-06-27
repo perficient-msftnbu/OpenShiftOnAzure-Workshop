@@ -11,7 +11,10 @@ Image
 oc import-image mongo:latest --confirm
 
 Config Map
-oc apply -f .\mongo-init-db.json
+oc apply -f .\mongo-init-db-config-map.json
 
 Configuration
 oc apply -f .\mongo-deployment-config.json
+
+Service
+oc apply -f .\mongo-service.yaml

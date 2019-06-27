@@ -81,7 +81,7 @@
                 "name": "mongo-volume-2"
               },
               {
-                "mountPath": "/scripts",
+                "mountPath": "/docker-entrypoint-initdb.d/",
                 "name": "mongo-volume-3"
               }
 						]
@@ -92,13 +92,13 @@
 				"schedulerName": "default-scheduler",
 				"securityContext": {},
 				"terminationGracePeriodSeconds": 30,
-				"volumes": [
-					{
-						"name": "mongo-volume-1",
-						"persistentVolumeClaim": {
-							"claimName": "mongo-storage-claim-config"
-						}
-					},
+        "volumes": [
+          {
+            "name": "mongo-volume-1",
+            "persistentVolumeClaim": {
+              "claimName": "mongo-storage-claim-config"
+            }
+          },
           {
             "name": "mongo-volume-2",
             "persistentVolumeClaim": {
@@ -107,11 +107,11 @@
           },
           {
             "name": "mongo-volume-3",
-            "persistentVolumeClaim": {
-              "claimName": "mongo-storage-claim-scripts"
+            "configMap": {
+              "name": "mongo-initdb"
             }
           }
-				]
+        ]
 			}
 		},
 		"triggers": [
