@@ -27,8 +27,15 @@ namespace Perficient.OpenShift.Workshop.API
             services.Configure<MongoDbSettings>(this.Configuration.GetSection(nameof(MongoDbSettings)));
 
             // Wire up the Weather Forecast provider implementation
-            services.AddSingleton<IWeatherForecastProvider, MockWeatherForecastProvider>();
-            //services.AddTransient<IWeatherForecastProvider, MongoDbWeatherForecastProvider>();
+            var useMongoDb = this.Configuration.GetValue<bool>("UseMongoDb");
+            if (useMongoDb)
+            {
+                services.AddTransient<IWeatherForecastProvider, MongoDbWeatherForecastProvider>();
+            }
+            else
+            {
+                services.AddSingleton<IWeatherForecastProvider, MockWeatherForecastProvider>();
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
