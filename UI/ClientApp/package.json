@@ -29,10 +29,10 @@
   },
   "scripts": {
     "start": "rimraf ./build && react-scripts start",
-    "build-test": "chmod -R 775 /opt/app-root/src/ClientApp && react-scripts build",
     "build": "react-scripts build",
     "test": "cross-env CI=true react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "lint": "eslint ./src/"
+    "lint": "eslint ./src/",
+    "deploy": "chmod +x ./env.sh && ./env.sh && cp env-config.js ./public/ && react-scripts build"
   }
 }
