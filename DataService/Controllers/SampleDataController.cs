@@ -1,9 +1,9 @@
-using CardApp.Models;
-using CardApp.Providers.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Perficient.OpenShift.Workshop.API.Models;
+using Perficient.OpenShift.Workshop.API.Providers.Interfaces;
 using System.Collections.Generic;
 
-namespace CardApp.Controllers
+namespace Perficient.OpenShift.Workshop.API.Controllers
 {
     [Route("api/[controller]")]
     public class SampleDataController : Controller

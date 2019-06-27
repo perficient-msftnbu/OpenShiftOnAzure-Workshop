@@ -1,14 +1,12 @@
-using CardApp.Providers;
-using CardApp.Providers.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Perficient.OpenShift.Workshop.API.Providers;
+using Perficient.OpenShift.Workshop.API.Providers.Interfaces;
 
-namespace Card_App
+namespace Perficient.OpenShift.Workshop.API
 {
     public class Startup
     {
@@ -43,15 +41,12 @@ namespace Card_App
             //don't think we need this as in a container world ssl termination usually happens at the router
             //app.UseHttpsRedirection();
 
-
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
-            });
-
-           
+            });           
         }
     }
 }

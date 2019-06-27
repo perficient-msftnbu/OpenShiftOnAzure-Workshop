@@ -1,10 +1,10 @@
-﻿using CardApp.Models;
-using CardApp.Providers.Interfaces;
+﻿using Perficient.OpenShift.Workshop.API.Models;
+using Perficient.OpenShift.Workshop.API.Providers.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CardApp.Providers
+namespace Perficient.OpenShift.Workshop.API.Providers
 {
     public class MockWeatherForecastProvider : IWeatherForecastProvider
     {

@@ -1,11 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 
-namespace asp_dotnet_core_web_api.Controllers
+namespace Perficient.OpenShift.Workshop.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

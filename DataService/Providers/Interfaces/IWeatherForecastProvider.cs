@@ -1,7 +1,7 @@
-﻿using CardApp.Models;
+﻿using Perficient.OpenShift.Workshop.API.Models;
 using System.Collections.Generic;
 
-namespace CardApp.Providers.Interfaces
+namespace Perficient.OpenShift.Workshop.API.Providers.Interfaces
 {
     public interface IWeatherForecastProvider
     {

@@ -1,4 +1,4 @@
-﻿namespace CardApp.Models
+﻿namespace Perficient.OpenShift.Workshop.API.Models
 {
     public class WeatherForecast
     {

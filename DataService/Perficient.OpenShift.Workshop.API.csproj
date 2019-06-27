@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
       <IsPackable>false</IsPackable>
 
-    <RootNamespace>CardApp</RootNamespace>
+    <RootNamespace>Perficient.OpenShift.Workshop.API</RootNamespace>
 
     <UserSecretsId>08e11989-e58e-4f15-b41b-7e03fd3d585f</UserSecretsId>
 
