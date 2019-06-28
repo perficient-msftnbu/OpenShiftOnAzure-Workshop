@@ -1,5 +1,5 @@
-﻿using Perficient.OpenShift.Workshop.API.Models;
-using Perficient.OpenShift.Workshop.API.Providers.Interfaces;
+﻿using Perficient.OpenShift.Workshop.API.Providers.Interfaces;
+using Perficient.OpenShift.Workshop.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

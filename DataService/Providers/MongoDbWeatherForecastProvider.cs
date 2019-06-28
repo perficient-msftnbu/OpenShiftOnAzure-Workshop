@@ -1,9 +1,8 @@
 ﻿using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using Perficient.OpenShift.Workshop.API.Configuration;
-using Perficient.OpenShift.Workshop.API.Models;
 using Perficient.OpenShift.Workshop.API.Providers.Interfaces;
+using Perficient.OpenShift.Workshop.Models;
 using System.Collections.Generic;
 using System.Linq;
 

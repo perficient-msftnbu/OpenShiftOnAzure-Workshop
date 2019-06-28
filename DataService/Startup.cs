@@ -22,6 +22,7 @@ namespace Perficient.OpenShift.Workshop.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddOptions();
 
             // Get the config settings (environment variables) for the Mongo DB provider
             services.Configure<MongoDbSettings>(this.Configuration.GetSection(nameof(MongoDbSettings)));

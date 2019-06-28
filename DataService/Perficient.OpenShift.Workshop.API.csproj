@@ -27,6 +27,10 @@
     <PackageReference Include="MongoDB.Driver" Version="2.8.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Perficient.OpenShift.Workshop.Models\Perficient.OpenShift.Workshop.Models.csproj" />
+  </ItemGroup>
+
 
 
  </Project>

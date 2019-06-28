@@ -18,3 +18,6 @@ oc apply -f .\mongo-deployment-config.json
 
 Service
 oc apply -f .\mongo-service.yaml
+
+
+oc process openshift//mongodb-persistent -p MONGODB_USER=forecastsuser -p MONGODB_PASSWORD=forecastpassword -p MONGODB_DATABASE=forecastdb -p MONGODB_ADMIN_PASSWORD=forecastpassword | oc create -f -

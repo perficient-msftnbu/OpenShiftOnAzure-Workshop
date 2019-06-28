@@ -1,4 +1,4 @@
-﻿namespace Perficient.OpenShift.Workshop.API.Models
+﻿namespace Perficient.OpenShift.Workshop.Models
 {
     public class WeatherForecast
     {
