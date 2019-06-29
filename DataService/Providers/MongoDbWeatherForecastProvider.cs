@@ -33,9 +33,20 @@ namespace Perficient.OpenShift.Workshop.API.Providers
 
         public IEnumerable<WeatherForecast> WeatherForecasts(int startDateIndex)
         {
+            var weatherForecasts = new List<WeatherForecast>();
             var database = this.GetDatabase();
-            var forecastsCollection = database.GetCollection<WeatherForecast>(nameof(WeatherForecast));
-            return forecastsCollection.Find(new BsonDocument()).ToList();
+            var forecastsCollection = database.GetCollection<BsonDocument>(nameof(WeatherForecast));
+            var documents = forecastsCollection.Find(new BsonDocument()).ToList();
+            foreach(var document in documents)
+            {
+                weatherForecasts.Add(new WeatherForecast
+                {
+                    DateFormatted = document.GetValue(nameof(WeatherForecast.DateFormatted)).AsString,
+                    TemperatureC = document.GetValue(nameof(WeatherForecast.TemperatureC)).AsInt32,
+                    Summary = document.GetValue(nameof(WeatherForecast.Summary)).AsString
+                });
+            }
+            return weatherForecasts;
         }
     }
 }
