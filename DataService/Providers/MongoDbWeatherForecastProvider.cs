@@ -34,7 +34,7 @@ namespace Perficient.OpenShift.Workshop.API.Providers
         public IEnumerable<WeatherForecast> WeatherForecasts(int startDateIndex)
         {
             var database = this.GetDatabase();
-            var forecastsCollection = database.GetCollection<WeatherForecast>("Forecasts");
+            var forecastsCollection = database.GetCollection<WeatherForecast>(nameof(WeatherForecast));
             return forecastsCollection.Find(new BsonDocument()).ToList();
         }
     }

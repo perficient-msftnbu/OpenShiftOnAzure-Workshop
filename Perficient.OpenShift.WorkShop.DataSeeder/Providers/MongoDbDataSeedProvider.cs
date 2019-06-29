@@ -14,6 +14,7 @@ namespace Perficient.OpenShift.WorkShop.DataSeeder.Providers
         private readonly IOptions<MongoDbSettings> settings;
         private IMongoDatabase database;
         private readonly string[] summaries;
+        private bool connectionError;
 
         public MongoDbDataSeedProvider(ILogger<MongoDbDataSeedProvider> logger,
             IOptions<MongoDbSettings> settings)
@@ -41,17 +42,40 @@ namespace Perficient.OpenShift.WorkShop.DataSeeder.Providers
 
         public bool HasWeatherForecastsData()
         {
-            var forecastsCollection = this.database.GetCollection<WeatherForecast>(nameof(WeatherForecast));
-            return forecastsCollection.AsQueryable().Any();
+            var hasWeatherForecastsData = false;
+            try
+            {
+                var database = this.GetDatabase();
+                var forecastsCollection = database.GetCollection<WeatherForecast>(nameof(WeatherForecast));
+                hasWeatherForecastsData = forecastsCollection.AsQueryable().Any();
+            }
+            catch(Exception e)
+            {
+                this.connectionError = true;
+                this.logger.LogError(e, "Error getting weather forecasts data.");
+            }
+            return hasWeatherForecastsData;
         }
 
         public void InsertWeatherForecasts()
         {
-            var forecastsCollection = this.database.GetCollection<WeatherForecast>(nameof(WeatherForecast));
-            var randomWeatherForecasts = this.GetRandomWeatherForecasts();
-            foreach (var forecast in randomWeatherForecasts)
+            if (this.connectionError)
             {
-                forecastsCollection.InsertOne(forecast);
+                return;
+            }
+            try
+            {
+                var database = this.GetDatabase();
+                var forecastsCollection = database.GetCollection<WeatherForecast>(nameof(WeatherForecast));
+                var randomWeatherForecasts = this.GetRandomWeatherForecasts();
+                foreach (var forecast in randomWeatherForecasts)
+                {
+                    forecastsCollection.InsertOne(forecast);
+                }
+            }
+            catch(Exception e)
+            {
+                this.logger.LogError(e, "Error inserting weather forecasts data.");
             }
         }
 
