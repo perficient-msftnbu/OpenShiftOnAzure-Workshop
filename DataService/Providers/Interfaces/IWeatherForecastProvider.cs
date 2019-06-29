@@ -1,4 +1,4 @@
-﻿using Perficient.OpenShift.Workshop.API.Models;
+﻿using Perficient.OpenShift.Workshop.Models;
 using System.Collections.Generic;
 
 namespace Perficient.OpenShift.Workshop.API.Providers.Interfaces

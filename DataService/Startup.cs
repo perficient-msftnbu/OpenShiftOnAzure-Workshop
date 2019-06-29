@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Perficient.OpenShift.Workshop.API.Configuration;
 using Perficient.OpenShift.Workshop.API.Providers;
 using Perficient.OpenShift.Workshop.API.Providers.Interfaces;
+using Perficient.OpenShift.Workshop.Models;
 
 namespace Perficient.OpenShift.Workshop.API
 {
@@ -22,13 +22,21 @@ namespace Perficient.OpenShift.Workshop.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddOptions();
 
             // Get the config settings (environment variables) for the Mongo DB provider
             services.Configure<MongoDbSettings>(this.Configuration.GetSection(nameof(MongoDbSettings)));
 
             // Wire up the Weather Forecast provider implementation
-            services.AddSingleton<IWeatherForecastProvider, MockWeatherForecastProvider>();
-            //services.AddTransient<IWeatherForecastProvider, MongoDbWeatherForecastProvider>();
+            var useMongoDb = this.Configuration.GetValue<bool>("UseMongoDb");
+            if (useMongoDb)
+            {
+                services.AddTransient<IWeatherForecastProvider, MongoDbWeatherForecastProvider>();
+            }
+            else
+            {
+                services.AddSingleton<IWeatherForecastProvider, MockWeatherForecastProvider>();
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

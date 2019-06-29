@@ -1,4 +1,4 @@
-﻿namespace Perficient.OpenShift.Workshop.API.Configuration
+﻿namespace Perficient.OpenShift.Workshop.Models
 {
     public class MongoDbSettings
     {
