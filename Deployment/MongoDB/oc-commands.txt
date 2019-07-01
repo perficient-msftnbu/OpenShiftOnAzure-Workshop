@@ -25,14 +25,22 @@ Using the Red Hat template for MongoDB:
 
 oc process openshift//mongodb-persistent -p MONGODB_USER=forecastsuser -p MONGODB_PASSWORD=forecastpassword -p MONGODB_DATABASE=forecastdb -p MONGODB_ADMIN_PASSWORD=forecastpassword | oc create -f -
 
+MongoDB Connection String Secret
+oc create secret generic mongo-db-connection-string-secret --from-literal=MongoDbSettings__ConnectionString=mongodb://forecastsuser:forecastpassword@mongodb.workshop-demo.svc.cluster.local:27017/forecastdb
+
 Data Seeder App
 dotnet publish -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App
 oc new-build --name=data-seeder dotnet:2.2 --binary=true
 oc start-build data-seeder --from-dir=bin/Release/netcoreapp2.2/publish --follow
-oc new-app data-seeder -e MongoDbSettings__ConnectionString=mongodb://forecastsuser:forecastpassword@mongodb.workshop-demo.svc.cluster.local:27017/forecastdb
+oc new-app data-seeder
+oc set env dc/data-seeder --from secret/mongo-db-connection-string-secret
 
 API App
 dotnet publish Perficient.OpenShift.Workshop.API.csproj -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App
 oc new-build --name=workshop-api dotnet:2.2 --binary=true
 oc start-build workshop-api --from-dir=bin/Release/netcoreapp2.2/publish --follow
-oc new-app workshop-api -e MongoDbSettings__ConnectionString=mongodb://forecastsuser:forecastpassword@mongodb.workshop-demo.svc.cluster.local:27017/forecastdb -e UseMongoDb=true
+oc new-app workshop-api
+oc set env dc/workshop-api --from secret/mongo-db-connection-string-secret
+ 
+Test the API in the Pod Terminal
+curl http://workshop-api.workshop-demo.svc.cluster.local:8080/api/sampledata/WeatherForecasts
