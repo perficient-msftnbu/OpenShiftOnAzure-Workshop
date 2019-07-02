@@ -33,6 +33,7 @@
     "test": "cross-env CI=true react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "eslint ./src/",
-    "deploy": "chmod +x ./env.sh && ./env.sh && cp env-config.js ./public/ && react-scripts build"
+    "deploy": "cp env.sh ./public/ && cp env-config.js ./public/ && react-scripts build",
+    "deploy-old": "chmod +x ./env.sh && ./env.sh && cp env-config.js ./public/ && react-scripts build"
   }
 }
