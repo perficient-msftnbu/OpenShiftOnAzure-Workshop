@@ -1,8 +1,9 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Perficient.OpenShift.Workshop.API.Providers.Interfaces;
 using Perficient.OpenShift.Workshop.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,23 +11,28 @@ namespace Perficient.OpenShift.Workshop.API.Providers
 {
     public class MongoDbWeatherForecastProvider : IWeatherForecastProvider
     {
-        private readonly IOptions<MongoDbSettings> settings;
+        private readonly MongoDbSettings settings;
+        private readonly ILogger logger;
         private IMongoDatabase database;
 
-        public MongoDbWeatherForecastProvider(IOptions<MongoDbSettings> settings)
+        public MongoDbWeatherForecastProvider(MongoDbSettings settings,
+            ILogger logger)
         {
-            this.settings = settings;
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger), $"{nameof(logger)} cannot be null.");
+            this.settings = settings ?? throw new ArgumentNullException(nameof(settings), $"{nameof(settings)} cannot be null.");
         }
 
         /// <summary>
-        /// Lazy-load for the MongoDB database.
+        /// Lazy-load for the MongoDB database driver.
         /// </summary>
         private IMongoDatabase GetDatabase()
         {
             if (this.database == null)
             {
-                var client = new MongoClient(this.settings.Value.ConnectionString);
-                this.database = client.GetDatabase(this.settings.Value.Database);
+                var connectionString = this.settings.GetConnectionString();
+                this.logger.LogInformation($"Connection String:  {connectionString}");
+                var client = new MongoClient(connectionString);
+                this.database = client.GetDatabase(this.settings.DatabaseName);
             }
             return this.database;            
         }

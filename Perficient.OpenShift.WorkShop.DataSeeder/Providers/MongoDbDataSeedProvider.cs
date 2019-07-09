@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using Perficient.OpenShift.Workshop.Models;
 using System;
@@ -10,17 +10,17 @@ namespace Perficient.OpenShift.WorkShop.DataSeeder.Providers
 {
     public class MongoDbDataSeedProvider : IDataSeederProvider
     {
-        private readonly ILogger<MongoDbDataSeedProvider> logger;
-        private readonly IOptions<MongoDbSettings> settings;
+        private readonly ILogger logger;
+        private readonly MongoDbSettings settings;
         private IMongoDatabase database;
         private readonly string[] summaries;
         private bool connectionError;
 
-        public MongoDbDataSeedProvider(ILogger<MongoDbDataSeedProvider> logger,
-            IOptions<MongoDbSettings> settings)
+        public MongoDbDataSeedProvider(ILogger logger,
+            MongoDbSettings settings)
         {
-            this.logger = logger;
-            this.settings = settings;
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger), $"{nameof(logger)} cannot be null.");
+            this.settings = settings ?? throw new ArgumentNullException(nameof(settings), $"{nameof(settings)} cannot be null.");
             this.summaries = new[]
             {
                 "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -34,8 +34,10 @@ namespace Perficient.OpenShift.WorkShop.DataSeeder.Providers
         {
             if (this.database == null)
             {
-                var client = new MongoClient(this.settings.Value.ConnectionString);
-                this.database = client.GetDatabase(this.settings.Value.Database);
+                var connectionString = this.settings.GetConnectionString();
+                this.logger.LogInformation($"Connection String:  {connectionString}");
+                var client = new MongoClient(connectionString);
+                this.database = client.GetDatabase(this.settings.DatabaseName);
             }
             return this.database;
         }
@@ -46,8 +48,9 @@ namespace Perficient.OpenShift.WorkShop.DataSeeder.Providers
             try
             {
                 var database = this.GetDatabase();
-                var forecastsCollection = database.GetCollection<WeatherForecast>(nameof(WeatherForecast));
-                hasWeatherForecastsData = forecastsCollection.AsQueryable().Any();
+                var forecastsCollection = database.GetCollection<BsonDocument>(nameof(WeatherForecast));
+                var documents = forecastsCollection.Find(new BsonDocument()).ToList();
+                hasWeatherForecastsData = documents.Any();
             }
             catch(Exception e)
             {

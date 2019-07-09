@@ -1,0 +1,102 @@
+{
+  "apiVersion": "apps.openshift.io/v1",
+  "kind": "DeploymentConfig",
+  "metadata": {
+    "labels": {
+      "app": "mssql-server-linux"
+    },
+    "name": "mssql-server-linux",
+    "namespace": "tim-sandbox"
+  },
+  "spec": {
+    "replicas": 1,
+    "selector": {
+      "app": "mssql-server-linux",
+      "deploymentconfig": "mssql-server-linux"
+    },
+    "strategy": {
+      "type": "Rolling"
+    },
+    "template": {
+      "metadata": {
+        "labels": {
+          "app": "mssql-server-linux",
+          "deploymentconfig": "mssql-server-linux"
+        }
+      },
+      "spec": {
+        "containers": [
+          {
+            "env": [
+              {
+                "name": "ACCEPT_EULA",
+                "value": "Y"
+              },
+              {
+                "name": "SA_PASSWORD",
+                "valueFrom": {
+                  "secretKeyRef": {
+                    "key": "SA_PASSWORD",
+                    "name": "sa-password-secret"
+                  }
+                }
+              }
+            ],
+            "envFrom": [
+              {
+                "secretRef": {
+                  "name": "sa-password-secret"
+                }
+              }
+            ],
+            "image": "sql-server:latest",
+            "terminationMessagePath": "/dev/termination-log",
+            "imagePullPolicy": "IfNotPresent",
+            "name": "mssql-server-linux",
+            "ports": [
+              {
+                "containerPort": 1433,
+                "protocol": "TCP"
+              }
+            ],
+            "volumeMounts": [
+              {
+                "mountPath": "/var/opt/mssql/",
+                "name": "sql-volume-01"
+              }
+            ]
+          }
+        ],
+        "dnsPolicy": "ClusterFirst",
+        "restartPolicy": "Always",
+        "volumes": [
+          {
+            "name": "sql-volume-01",
+            "persistentVolumeClaim": {
+              "claimName": "sql-storage-claim"
+            }
+          }
+        ]
+      }
+    },
+    "triggers": [
+      {
+        "type": "ConfigChange"
+      },
+      {
+        "imageChangeParams": {
+          "automatic": true,
+          "containerNames": [
+            "mssql-server-linux"
+          ],
+          "from": {
+            "kind": "ImageStreamTag",
+            "name": "sql-server:latest",
+            "namespace": "tim-sandbox"
+          }
+        },
+        "type": "ImageChange"
+      }
+    ]
+  }
+}
