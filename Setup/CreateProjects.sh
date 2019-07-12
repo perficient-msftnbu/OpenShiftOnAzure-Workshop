@@ -23,6 +23,9 @@ while [ "$1" != "" ]; do
             numberOfProjects=$(($stringProjs + 0)) 
            
             ;;
+        -pw=* | --password=* ) 
+            password=${1#*=} 
+            ;;
     esac
     shift
 done
@@ -37,13 +40,13 @@ then
         projectName="$baseProjectName$c"
         userName="$baseUserName$c$baseDomain"
 
-        az ad user create --display-name $userName --password Perfic3ntD3m0 --user-principal-name $userName
+        az ad user create --display-name $userName --password $password --user-principal-name $userName
 
         oc new-project $projectName
         oc adm policy add-role-to-user edit $userName -n $projectName
     done
 else
- for ((c=9; c<=$numberOfProjects; c++))
+ for ((c=1; c<=$numberOfProjects; c++))
     do
         projectName="$baseProjectName$c"
         userName="$baseUserName$c$baseDomain"

@@ -1,16 +1,22 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-         {
-            "type": "bashdb",
-            "request": "launch",
-            "name": "Bash-Debug (simplest configuration)",
-            "program": "${file}",
-            "args": ["-d", "-p=aro-demo-user-", "-u=ARO_DemoUser", "-e=@msftnbu.com", "-n=25"]
-            
-        }
-    ]
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "bashdb",
+      "request": "launch",
+      "name": "Bash-Debug (simplest configuration)",
+      "program": "${file}",
+      "args": [
+        "-p=aro-workshop-user-",
+        "-u=ARO_workshopUser",
+        "-e=@msftnbu.com",
+        "-n=5",
+        "-pw=Perfic3ntD3m0",
+        "-d"
+      ]
+    }
+  ]
 }
