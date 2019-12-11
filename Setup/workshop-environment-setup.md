@@ -18,7 +18,9 @@
 
 ## ```dotnet``` framework
 
-[dotnet installer link](https://dotnet.microsoft.com/learn/dotnet/hello-world-tutorial/install)
+[dotnet installer link](https://dotnet.microsoft.com/download/dotnet-core/2.2)
+
+Choose SDK 2.2.207 => Windows X64
 
 ### ```dotnet``` installation walkthrough
 
