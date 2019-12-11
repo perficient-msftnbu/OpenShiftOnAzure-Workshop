@@ -10,7 +10,7 @@ namespace Perficient.OpenShift.Workshop.API.Controllers
     {
         private static string[] CatsList = new[]
         {
-            "Cat1", "Cat2", "Cat3"
+            "Calico", "Tuxedo", "Ragdoll", "Persian", "Burmese"
         };
 
         [HttpGet("[action]")]
