@@ -20,6 +20,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# exclude environment configurations out of source code
+# Temporary env files
 /public/env-config.js
 env-config.js
