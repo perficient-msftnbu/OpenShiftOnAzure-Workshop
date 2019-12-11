@@ -4,7 +4,7 @@ metadata:
   labels:
     app: mongo
   name: mongo
-  namespace: workshop-demo
+  namespace: tim-sandbox
 spec:
   ports:
     - name: 27017-tcp

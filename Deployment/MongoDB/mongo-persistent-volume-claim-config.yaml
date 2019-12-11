@@ -3,7 +3,7 @@
   "kind": "PersistentVolumeClaim",
   "metadata": {
     "name": "mongo-storage-claim-config",
-    "namespace": "workshop-demo"
+    "namespace": "tim-sandbox"
   },
   "spec": {
     "accessModes": [
