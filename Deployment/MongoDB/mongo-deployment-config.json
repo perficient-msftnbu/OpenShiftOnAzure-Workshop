@@ -6,7 +6,7 @@
 			"app": "mongo"
 		},
 		"name": "mongo",
-		"namespace": "workshop-demo"
+		"namespace": "tim-sandbox"
 	},
 	"spec": {
 		"replicas": 1,
@@ -43,11 +43,11 @@
               },
               {
                 "name": "MONGO_INITDB_DATABASE",
-                "value": "weather"
+                "value": "forecastdb"
               },
               {
                 "name": "MONGO_NON_ROOT_USERNAME",
-                "value": "mongouser"
+                "value": "forecastsuser"
               },
               {
                 "name": "MONGO_NON_ROOT_PASSWORD",
@@ -79,10 +79,6 @@
               {
                 "mountPath": "/data/db",
                 "name": "mongo-volume-2"
-              },
-              {
-                "mountPath": "/docker-entrypoint-initdb.d/",
-                "name": "mongo-volume-3"
               }
 						]
 					}
@@ -104,12 +100,6 @@
             "persistentVolumeClaim": {
               "claimName": "mongo-storage-claim-data"
             }
-          },
-          {
-            "name": "mongo-volume-3",
-            "configMap": {
-              "name": "mongo-initdb"
-            }
           }
         ]
 			}
@@ -127,7 +117,7 @@
 					"from": {
 						"kind": "ImageStreamTag",
 						"name": "mongo:latest",
-						"namespace": "workshop-demo"
+						"namespace": "tim-sandbox"
 					}
 				},
 				"type": "ImageChange"

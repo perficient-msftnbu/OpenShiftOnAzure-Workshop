@@ -1,19 +1,27 @@
-﻿Doing MongoDB by scratch:
+﻿Secrets
+
+Creating a single-key secret
+oc create secret generic my-single-secret --from-literal=key1=supersecret
+
+Creating a multiple-key secret
+oc create secret generic my-multiple-secret --from-literal=key1=supersecret --from-literal=key2=topsecret
+
+Doing MongoDB by scratch:
 
 Secrets
-oc create secret generic mongo-root-password-secret --from-literal=MONGO_INITDB_ROOT_PASSWORD=<Your Password>
-oc create secret generic mongo-non-root-password-secret --from-literal=MONGO_NON_ROOT_PASSWORD=<Your Password>
+oc create secret generic mongo-root-password-secret --from-literal=MONGO_INITDB_ROOT_PASSWORD=forecastpassword
+oc create secret generic mongo-non-root-password-secret --from-literal=MONGO_NON_ROOT_PASSWORD=forecastpassword
+
+MONGODB_USER=forecastsuser 
+MONGODB_PASSWORD=forecastpassword 
+MONGODB_DATABASE=forecastdb
 
 Persistent Volume Claims
 oc apply -f .\mongo-persistent-volume-claim-config.yaml
 oc apply -f .\mongo-persistent-volume-claim-data.yaml
-oc apply -f .\mongo-persistent-volume-claim-scripts.yaml
 
 Image
 oc import-image mongo:latest --confirm
-
-Config Map
-oc apply -f .\mongo-init-db-config-map.json
 
 Configuration
 oc apply -f .\mongo-deployment-config.json
