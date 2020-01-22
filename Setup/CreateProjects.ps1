@@ -13,6 +13,8 @@ Param(
 	[string] $Password
 )
 
+az login --allow-no-subscriptions
+
 if ($Delete -eq 1)
 {
 	Write-Host "Deleting projects and users..."
@@ -37,30 +39,3 @@ else
 		oc adm policy add-role-to-user edit $userName -n $projectName
 	}
 }
-
-<#
-if (( $shouldDelete == 0 ));
-then
-    for ((c=1; c<=$numberOfProjects; c++))
-    do
-        projectName="$baseProjectName$c"
-        userName="$baseUserName$c$baseDomain"
-
-        az ad user create --display-name $userName --password $password --user-principal-name $userName
-
-        oc new-project $projectName
-        oc adm policy add-role-to-user edit $userName -n $projectName
-    done
-else
- for ((c=1; c<=$numberOfProjects; c++))
-    do
-        projectName="$baseProjectName$c"
-        userName="$baseUserName$c$baseDomain"
-
-        az ad user delete --upn-or-object-id $userName
-
-        oc delete project $projectName
-   
-    done
-fi
-#>
